@@ -1,10 +1,9 @@
 // ==UserScript==
-// @name         模板项目
-// @author       作者名
+// @name         矮人之书
+// @author       地星 AKA Sans
 // @version      1.0.0
-// @description  这是海豹的js扩展模板项目，请自行修改信息
-// @timestamp    1674477074
-// 2023/1/23
+// @description  这本矮人之书几乎记录了一切...
+// @timestamp    2025-9-25
 // @license      MIT
-// @homepageURL  https://github.com/sealdice/sealdice-js-template
+// @homepageURL  https://github.com/ISansXI/sealdice-dwarf-book#
 // ==/UserScript==
