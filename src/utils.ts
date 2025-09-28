@@ -123,12 +123,12 @@ function removeElementByIndex<T>(arr: T[], index: number): T[] {
 }
 
 function extractContentAfterEditFunctionPrefix(str: string): string | null {
-    const regex = /^\.\w+\s+edit\s+\d+\s*(.*)$/;
+    const regex = /^\.([a-zA-Z]+)\s+edit\s+(\d+)\s*(.+)$/s;
 
     const match = str.match(regex);
 
     // 如果找到匹配，返回前缀后的内容，否则返回null
-    return match ? match[1] : null;
+    return match ? match[3] : null;
 }
 
 function replaceNewlinesWithSpaces(str: string): string {

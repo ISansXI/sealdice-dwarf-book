@@ -3,7 +3,7 @@
 // @author       地星 AKA Sans
 // @version      1.0.0
 // @description  这本矮人之书几乎记录了一切...
-// @timestamp    2025-9-25
+// @timestamp    2025-9-28
 // @license      MIT
 // @homepageURL  https://github.com/ISansXI/sealdice-dwarf-book#
 // ==/UserScript==

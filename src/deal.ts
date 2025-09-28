@@ -71,19 +71,24 @@ export function run(ctx: seal.MsgContext, msg: seal.Message, cmdArgs: seal.CmdAr
                     const articleAuthorId = articles[articleIndex].authorId;
                     if (articleAuthorId == userId || utils.checkPLevel(pLevel) >= 4) {
                         let content = utils.extractContentAfterEditFunctionPrefix(rawContent);
-                        content = content.replace(/^\s+/, '');
-                        if (content == "") {
-                            seal.replyToSender(ctx, msg, utils.formatString(misc.DB_RUN_INFO.edit.null));
+                        console.log("当前的rawContent: " + rawContent + "\n" + "当前edit的content: " + content) //debug
+                        if (content == null) {
+                            seal.replyToSender(ctx, msg, utils.formatString(misc.DB_RUN_INFO.edit.error));
                         } else {
-                            const id = getData.data[articleIndex].id;
-                            const createTimeOld = getData.data[articleIndex].createTime;
-                            const editCountsOld = getData.data[articleIndex].editCounts;
-                            const a = new Article(content, userId, userName, id);
-                            a.createTime = createTimeOld;
-                            a.editCounts = editCountsOld + 1;
-                            getData.data[articleIndex] = a;
-                            utils.saveData(ext, getData);
-                            seal.replyToSender(ctx, msg, utils.formatString(misc.DB_RUN_INFO.edit.success));
+                            content = content.replace(/^\s+/, '');
+                            if (content == "") {
+                                seal.replyToSender(ctx, msg, utils.formatString(misc.DB_RUN_INFO.edit.null));
+                            } else {
+                                const id = articles[articleIndex].id;
+                                const createTimeOld = articles[articleIndex].createTime;
+                                const editCountsOld = articles[articleIndex].editCounts;
+                                const a = new Article(content, userId, userName, id);
+                                a.createTime = createTimeOld;
+                                a.editCounts = editCountsOld + 1;
+                                getData.data[articleIndex] = a;
+                                utils.saveData(ext, getData);
+                                seal.replyToSender(ctx, msg, utils.formatString(misc.DB_RUN_INFO.edit.success));
+                            }
                         }
                     }
                     else {
@@ -233,6 +238,17 @@ function filtArticles(articlesP: Array<Article>, options: string, userId: string
         }
         else if (c.startsWith("content=")) {
             c = c.slice("content=".length);
+            c = utils.extractQuotedStrings(c)[0];
+            const res = [];
+            for (let i = 0; i < articles.length; i++) {
+                if (articles[i].content.includes(c)) {
+                    res.push(articles[i]);
+                }
+            }
+            articles = res;
+        }
+        else if (c.startsWith("c=")) {
+            c = c.slice("c=".length);
             c = utils.extractQuotedStrings(c)[0];
             const res = [];
             for (let i = 0; i < articles.length; i++) {
