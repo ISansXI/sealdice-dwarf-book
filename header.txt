@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         矮人之书
 // @author       地星 AKA Sans
-// @version      1.0.0
+// @version      1.0.1
 // @description  这本矮人之书几乎记录了一切...
 // @timestamp    2025-9-28
 // @license      MIT

@@ -111,17 +111,17 @@ export function run(ctx: seal.MsgContext, msg: seal.Message, cmdArgs: seal.CmdAr
                 let articles = getData.data;
                 articles = filtArticles(articles, rawContent, userId);
                 const pageSum = Math.floor(articles.length / countsPerPage) + 1;
-                let page = parseInt(cmds[1]) || 0;
-                if (page > pageSum - 1) page = pageSum - 1;
-                if (page < 0) page = 0;
+                let page = parseInt(cmds[1]) || 1;
+                if (page > pageSum) page = pageSum;
+                if (page < 1) page = 1;
                 let resB = "";
-                for (let i = page * countsPerPage; i < (((page + 1) * countsPerPage) > articles.length ? articles.length : (page + 1) * countsPerPage); i++) {
+                for (let i = (page - 1) * countsPerPage; i < ((page * countsPerPage) > articles.length ? articles.length : page * countsPerPage); i++) {
                     let temp = articles[i].content.slice(0, previewCount);
                     temp = utils.replaceNewlinesWithSpaces(temp);
                     if (articles[i].content.length > previewCount) temp += '...';
                     resB += utils.formatString(misc.DB_RUN_INFO.list.resultOne, articles[i].id, temp);
                 }
-                resB += utils.formatString(misc.DB_RUN_INFO.list.footer, page + 1, pageSum, articles.length);
+                resB += utils.formatString(misc.DB_RUN_INFO.list.footer, page, pageSum, articles.length);
                 seal.replyToSender(ctx, msg, resB);
                 break;
             }
